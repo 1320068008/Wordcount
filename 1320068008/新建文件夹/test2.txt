@@ -1,0 +1,27 @@
+字符个数：150
+No.1 amazing  :  3次 
+No.2 easy  :  2次 
+No.3 airplane  :  1次 
+No.4 arrplane  :  1次 
+No.5 beatiful  :  1次 
+No.6 cars  :  1次 
+No.7 life  :  1次 
+No.8 maybe  :  1次 
+No.9 uuus  :  1次 
+No.10 watt  :  1次 
+输出长度为3的单词组：
+amazing amazing wonderful  1次
+amazing easy easy  1次
+amazing wonderful maybe  1次
+arrplane airplane uuus  1次
+beatiful life watt  1次
+cars arrplane airplane  1次
+easy amazing amazing  1次
+easy easy amazing  1次
+life watt cars  1次
+maybe what beatiful  1次
+watt cars arrplane  1次
+what beatiful life  1次
+wonderful maybe what  1次
+单词总数：15
+行数 ：4
