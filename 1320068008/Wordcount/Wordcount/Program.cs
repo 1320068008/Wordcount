@@ -36,10 +36,10 @@ namespace Wordcount
         //此函数用于调用主功能函数
         public void Movedata(int m,int n,string p)
         {
-            MajorFun Maj = new MajorFun(zipdata,path );
-            Maj.CountChar();
+            MajorFun Maj = new MajorFun();
+            Maj.CountChar(zipdata);
             Maj.CountE_word(path,m,n);
-            Maj.GetRows();
+            Maj.GetRows(path);
             Maj.WritoFile(p);
         }      
     }

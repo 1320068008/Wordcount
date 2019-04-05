@@ -1,4 +1,4 @@
-字符个数：150
+字符个数：154
 No.1 amazing  :  3次 
 No.2 easy  :  2次 
 No.3 airplane  :  1次 

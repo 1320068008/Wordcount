@@ -9,25 +9,18 @@ using System.IO;
 
 namespace Wordcount
 {
-    class MajorFun
+    public class MajorFun
     {
-        byte[] data;
-        string path;
-        public MajorFun(byte [] data,string path)
-        {
-            this.data = data;
-            this.path = path;
-        }  
         ArrayList list = new ArrayList();
         List<string> Cout = new List<string>();
         long Count1 = 0;
         //此函数用于计算文本Ascii码字符个数
-        public void CountChar()
+        public long CountChar(byte [] data)
         {
             long Count=0;
             for(long i=0;i<data.Length;i++)
             {
-                if (data[i] >= 0 && data[i] <= 127&&data[i]!='\n')
+                if (data[i] >= 0 && data[i] <= 127)
                 {
                     Count++;
                 }
@@ -39,9 +32,10 @@ namespace Wordcount
             long c = Count - Count1;
             Cout.Add("字符个数："+c);
             Console.WriteLine("字符个数："+(Count-Count1));
+            return Count;
         }
         //此函数用于计算统计出现次数在前十的单词
-       public void CountE_word(string path, int m,int n)
+       public int CountE_word(string path, int m,int n)
         {
             List<string> list = new List<string>();
             List<string> list1 = new List<string>();
@@ -64,64 +58,71 @@ namespace Wordcount
                             list1.Add(word);
                         }
                     }
+
                 }
                 sr.Close();
-            }
-            for (int i = 0; i <= list.Count - 1; i++)
-            {
-                int j;
-                for (s = list[i], j = 0; j < 0; j++)
+
+                for (int i = 0; i <= list.Count - 1; i++)
                 {
-                    s += " " + list[i + j + 1];
+                    int j;
+                    for (s = list[i], j = 0; j < 0; j++)
+                    {
+                        s += " " + list[i + j + 1];
+                    }
+                    if (frequencies.ContainsKey(s))
+                    {
+                        frequencies[s]++;
+                    }
+                    else
+                        frequencies[s] = 1;
                 }
-                if (frequencies.ContainsKey(s))
+                int o = 0;
+                Console.WriteLine("单词频率前" + n + "名及其出现的次数：");
+                Dictionary<string, int> item = frequencies.OrderByDescending(r => r.Value).ThenBy(r => r.Key).ToDictionary(r => r.Key, r => r.Value);
+                foreach (KeyValuePair<string, int> entry in item)
                 {
-                    frequencies[s]++;
+                    o++;
+                    if (o > n)
+                        break;
+                    string word = entry.Key;
+                    int frequency = entry.Value;
+                    Console.WriteLine("No." + o + " " + word + "  :  " + frequency + "次 ");
+                    Cout.Add("No." + o + " " + word + "  :  " + frequency + "次 ");
                 }
-                else
-                    frequencies[s] = 1;
-            }
-            int o = 0;
-            Console.WriteLine("单词频率前"+n+"名及其出现的次数：");
-            Dictionary<string, int> item = frequencies.OrderByDescending(r => r.Value).ThenBy(r => r.Key).ToDictionary(r => r.Key, r => r.Value);
-            foreach (KeyValuePair<string, int> entry in item)
-            {
-                o++;
-                if (o > n)
-                    break;
-                string word = entry.Key;
-                int frequency = entry.Value;
-                Console.WriteLine("No." + o+" "+ word + "  :  " + frequency+"次 ");
-                Cout.Add("No." + o+" "+ word + "  :  " + frequency+"次 ");
-            }     
-            for (int i = 0; i <= list1.Count - m; i++)
-            {
-                int j;
-                for (s1 = list1[i], j = 0; j < m - 1; j++)
+                for (int i = 0; i <= list1.Count - m; i++)
                 {
-                    s1 += " " + list1[i + j + 1];
+                    int j;
+                    for (s1 = list1[i], j = 0; j < m - 1; j++)
+                    {
+                        s1 += " " + list1[i + j + 1];
+                    }
+                    if (frequencies1.ContainsKey(s1))
+                    {
+                        frequencies1[s1]++;
+                    }
+                    else
+                        frequencies1[s1] = 1;
                 }
-                if (frequencies1.ContainsKey(s1))
+                Dictionary<string, int> item1 = frequencies1.OrderByDescending(r => r.Value).ThenBy(r => r.Key).ToDictionary(r => r.Key, r => r.Value);
+                Console.WriteLine("输出长度为" + m + "的单词组：");
+                Cout.Add("输出长度为" + m + "的单词组：");
+                foreach (var dic1 in item1)
                 {
-                    frequencies1[s1]++;
+                    Console.Write(" {0}  {1}次\n", dic1.Key, dic1.Value);
+                    Cout.Add(dic1.Key.ToString() + "  " + dic1.Value + "次");
                 }
-                else
-                    frequencies1[s1] = 1;
+                Console.WriteLine("单词总数：");
+                Console.WriteLine("{0}个", list.Count);
+                Cout.Add("单词总数：" + list.Count);
+                return 1;
             }
-            Dictionary<string, int> item1 = frequencies1.OrderByDescending(r => r.Value).ThenBy(r => r.Key).ToDictionary(r => r.Key, r => r.Value);
-            Console.WriteLine("输出长度为" + m + "的单词组：");
-            Cout.Add("输出长度为" + m + "的单词组：");
-            foreach (var dic1 in item1)
+            else
             {
-                Console.Write(" {0}  {1}次\n",dic1.Key,dic1.Value );
-                Cout.Add(dic1.Key.ToString()+"  "+dic1.Value+"次");
+                return -1;
             }
-            Console.WriteLine("单词总数：");
-            Console.WriteLine("{0}个",list.Count );
-            Cout.Add("单词总数："+list.Count);
         }
         //此函数用于计算文本有效行数
-        public void GetRows()
+        public void GetRows(string path)
         {
             try
             {
